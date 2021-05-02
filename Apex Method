@@ -1,0 +1,14 @@
+     public static void controlPicklist(List<Id> idcoin){
+         
+         List<Cointestazione__c > cointFull = [SELECT Id, Tipo_di_Cointestazione__c, (SELECT Id FROM  Fidejussioni__r) FROM Cointestazione__c WHERE  Id IN: idcoin];
+         
+         for(Cointestazione__c coint : cointFull){
+          
+             if(coint.Fidejussioni__r.size() > 0){
+             
+                 Cointestazione__c newcoin = (Cointestazione__c)Trigger.newMap.get(coint.id);                 
+                 newcoin.Tipo_di_Cointestazione__c.adderror('Non puoi modificare perche ha Fidejussione');
+                 
+             }
+         }      
+    }
